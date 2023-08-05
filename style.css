@@ -39,24 +39,29 @@ q:before, q:after {
 }
 table {
 	border-collapse: collapse;
-	border-spacing: 0;
+	border-spacing: 0; 
 }
 
 /* ---------------------------------------- */
 
+:root {
+	--primary-color: rgb(240, 240, 240);
+	--button-padding: 10px 15px 10px 15px;
+}
+
 body {
 	font-family: sans-serif;
-	overflow: hidden;
 	margin-bottom: 100px;
-	background-color: aliceblue;
+	background-color: var(--primary-color);
 }
 
 .btn {
 	border-radius: 10px;
 	font-size: 20px;
 	border: none;
-	padding: 5px 10px 5px 10px;
+	padding: var(--button-padding);
 	cursor: pointer;
+	font-weight: bold;
 }
 
 .header {
@@ -81,19 +86,18 @@ body {
 
 .login {
 	background-color: rgba(138, 43, 226, 0.8);
-	font-weight: bold;
 	color: white;
 }
 
 .main-body {
 	flex-grow: 1;
-	background-color: aliceblue;
+	background-color: var(--primary-color);
 	margin: 50px 300px 100px 300px;
 	text-align: center;
 }
 
 .add-book {
-	background-color: aqua;
+	background-color: rgb(200, 200, 200);
 }
 
 .books-container {
@@ -120,15 +124,15 @@ body {
 	font-weight: bold;
 }
 
-.has-read {
+.green-btn {
 	background-color: rgba(0, 255, 0, 0.5);
-	width: 75%;
+	width: 100%;
 }
 
 .remove-btn {
 	background-color: red;
 	color: white;
-	width: 75%;
+	width: 100%;
 }
 
 .form-container {
@@ -140,10 +144,21 @@ body {
 	left: 50%;
 	width: 300px;
 	transform: translate(-50%, -50%);
-	background-color: rgba(128, 128, 128, 0.5);
+	background-color: var(--primary-color);
 	padding: 20px;
-	z-index: 1;
+	z-index: 2;
 	border-radius: 10px;
+}
+
+.dark-overlay {
+	position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: none; 
+  z-index: 1; 
 }
 
 #add-new-book-form {
@@ -152,12 +167,16 @@ body {
 	gap: 20px;
 	align-items: center;
 	width: 100%;
+	font-weight: bold;
+	z-index: 2;
 }
 
 #add-new-book-form > h3 {
-	font-weight: bold;
-	color: white;
 	font-size: 32px;
+}
+
+#book-author {
+	font-weight: bold;
 }
 
 .has-read-book {
@@ -173,8 +192,4 @@ input[type='number'] {
 	padding: 10px;
 	border-radius: 10px;
 	border: none;
-}
-
-input[type='text'] {
-	cursor: text;
 }
