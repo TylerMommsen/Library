@@ -125,6 +125,12 @@ body {
 	width: 75%;
 }
 
+.remove-btn {
+	background-color: red;
+	color: white;
+	width: 75%;
+}
+
 .form-container {
 	display: none;
 	justify-content: center;

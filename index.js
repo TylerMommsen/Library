@@ -10,6 +10,21 @@ function Book(author, title, pages, hasRead) {
 const addBookBtn = document.querySelector('#add-book-btn');
 addBookBtn.addEventListener('click', handleBookForm);
 
+function removeBtn(button) {
+  console.log('1');
+  let buttonParent = button.parentNode;
+  console.log(buttonParent);
+  let bookTitle = buttonParent.firstElementChild.textContent;
+  console.log(bookTitle);
+  myLibrary.forEach(function (value, i) {
+    if (value.author === bookTitle) {
+      console.log('found');
+      myLibrary.splice(i, 1);
+      buttonParent.remove();
+    }
+  })
+}
+
 function isInLibrary(author) {
   myLibrary.forEach(function (value) {
     if (value.author === author) {
@@ -54,22 +69,30 @@ function addBookToLibrary(author, title, pages, hasRead) {
 const booksContainer = document.querySelector('.books-container');
 
 function addNewBook(author, title, pages, hasRead) {
-    const newBook = document.createElement('div');
-    newBook.classList.add('book');
-    const newAuthor = document.createElement('p');
-    const newTitle = document.createElement('p');
-    const newPages = document.createElement('p');
-    const newHasRead = document.createElement('button');
-    newHasRead.classList.add('btn', 'has-read');
-    newAuthor.textContent = author;
-    newTitle.textContent = title;
-    newPages.textContent = pages;
-    newHasRead.textContent = hasRead;
+  const newBook = document.createElement('div');
+  newBook.classList.add('book');
+  const newAuthor = document.createElement('p');
+  const newTitle = document.createElement('p');
+  const newPages = document.createElement('p');
+  const newHasRead = document.createElement('button');
+  const remove = document.createElement('button');
+  remove.addEventListener('click', function () {
+    removeBtn(remove);
+  })
+  newHasRead.classList.add('btn', 'has-read');
+  remove.classList.add('btn', 'remove-btn');
+  newAuthor.textContent = author;
+  newTitle.textContent = title;
+  newPages.textContent = pages;
+  newHasRead.textContent = hasRead;
+  remove.textContent = 'remove';
+  
 
-    newBook.appendChild(newAuthor);
-    newBook.appendChild(newTitle);
-    newBook.appendChild(newPages);
-    newBook.appendChild(newHasRead);
+  newBook.appendChild(newAuthor);
+  newBook.appendChild(newTitle);
+  newBook.appendChild(newPages);
+  newBook.appendChild(newHasRead);
+  newBook.appendChild(remove);
 
-    booksContainer.appendChild(newBook);
+  booksContainer.appendChild(newBook);
 }
