@@ -7,18 +7,26 @@ function Book(author, title, pages, hasRead) {
   this.hasRead = hasRead;
 }
 
+Book.prototype.updateHasRead = function () {
+  console.log('called');
+  if (this.hasRead === true) {
+    console.log('1');
+    this.hasRead = false;
+  } else {
+    console.log('2');
+    this.hasRead = true;
+  }
+}
+
 const addBookBtn = document.querySelector('#add-book-btn');
 addBookBtn.addEventListener('click', handleBookForm);
 
 function removeBtn(button) {
-  console.log('1');
   let buttonParent = button.parentNode;
-  console.log(buttonParent);
   let bookTitle = buttonParent.firstElementChild.textContent;
-  console.log(bookTitle);
+
   myLibrary.forEach(function (value, i) {
     if (value.author === bookTitle) {
-      console.log('found');
       myLibrary.splice(i, 1);
       buttonParent.remove();
     }
@@ -49,11 +57,11 @@ function handleBookForm() {
     let title = titleInput.value;
     let pages = pagesInput.value;
     let hasRead = hasReadInput.checked;
-    if (hasRead === true) {
-      hasRead = 'yes';
-    } else {
-      hasRead = 'no';
-    }
+    // if (hasRead === true) {
+    //   hasRead = 'yes';
+    // } else {
+    //   hasRead = 'no';
+    // }
     addBookToLibrary(author, title, pages, hasRead);
     formContainer.style.display = 'none';
   })
@@ -61,7 +69,6 @@ function handleBookForm() {
 
 function addBookToLibrary(author, title, pages, hasRead) {
   if (!isInLibrary(author)) {
-    myLibrary.push(new Book(author, title, pages, hasRead));
     addNewBook(author, title, pages, hasRead);
   }
 }
@@ -69,12 +76,23 @@ function addBookToLibrary(author, title, pages, hasRead) {
 const booksContainer = document.querySelector('.books-container');
 
 function addNewBook(author, title, pages, hasRead) {
+  let newBookObj = new Book(author, title, pages, hasRead)
+  console.log(newBookObj.hasRead);
   const newBook = document.createElement('div');
   newBook.classList.add('book');
   const newAuthor = document.createElement('p');
   const newTitle = document.createElement('p');
   const newPages = document.createElement('p');
   const newHasRead = document.createElement('button');
+  newHasRead.addEventListener('click', function () {
+    newBookObj.updateHasRead();
+    console.log(newBookObj.hasRead);
+    if (newBookObj.hasRead) {
+      newHasRead.textContent = 'yes';
+    } else {
+      newHasRead.textContent = 'no';
+    }
+  });
   const remove = document.createElement('button');
   remove.addEventListener('click', function () {
     removeBtn(remove);
@@ -84,7 +102,11 @@ function addNewBook(author, title, pages, hasRead) {
   newAuthor.textContent = author;
   newTitle.textContent = title;
   newPages.textContent = pages;
-  newHasRead.textContent = hasRead;
+  if (hasRead) {
+    newHasRead.textContent = 'yes';
+  } else {
+    newHasRead.textContent = 'no';
+  }
   remove.textContent = 'remove';
   
 
@@ -94,5 +116,6 @@ function addNewBook(author, title, pages, hasRead) {
   newBook.appendChild(newHasRead);
   newBook.appendChild(remove);
 
+  myLibrary.push(newBookObj);
   booksContainer.appendChild(newBook);
 }
