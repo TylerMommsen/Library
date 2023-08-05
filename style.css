@@ -113,6 +113,7 @@ body {
 	height: 200px;
 	border-radius: 10px;
 	font-size: 20px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .author {
@@ -122,4 +123,52 @@ body {
 .has-read {
 	background-color: rgba(0, 255, 0, 0.5);
 	width: 75%;
+}
+
+.form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	transform: translate(-50%, -50%);
+	background-color: rgba(128, 128, 128, 0.5);
+	padding: 20px;
+	z-index: 1;
+	border-radius: 10px;
+}
+
+#add-new-book-form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	width: 100%;
+}
+
+#add-new-book-form > h3 {
+	font-weight: bold;
+	color: white;
+	font-size: 32px;
+}
+
+.has-read-book {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+}
+
+input[type='text'],
+input[type='number'] {
+	width: 100%;
+	padding: 10px;
+	border-radius: 10px;
+	border: none;
+}
+
+input[type='text'] {
+	cursor: text;
 }

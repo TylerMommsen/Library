@@ -21,19 +21,27 @@
       <button class="btn add-book" id="add-book-btn">Add Book +</button>
       <div class="books-container">
         <div class="book">
-          <div class="author">
-            <p>Thor, God Of Thunder</p>
-          </div>
-          <div class="title">
-            <p>How to write Javascript</p>
-          </div>
-          <div class="pages">
-            <p>10</p>
-          </div>
-
+          <p>Thor, God Of Thunder</p>
+          <p>How to write Javascript</p>
+          <p>10</p>
           <button class="btn has-read">Yes</button>
         </div>
       </div>
+    </div>
+
+    <div class="form-container">
+      <form id="add-new-book-form">
+        <h3>Add new book</h3>
+        <input type="text" id="author" placeholder="Author" required>
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="number" id="pages" placeholder="Pages" required>
+        
+        <div class="has-read-book">
+          <label for="is-read">Have you read it?</label>
+          <input type="checkbox" id="is-read" required>
+        </div>
+        <button type="submit" class="btn btn-green">Submit</button>
+      </form>
     </div>
   </body>
 </html>
