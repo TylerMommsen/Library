@@ -129,8 +129,8 @@ body {
 	width: 100%;
 }
 
-.remove-btn {
-	background-color: red;
+.red-btn {
+	background-color: rgba(255, 0, 0, 0.8);
 	color: white;
 	width: 100%;
 }
@@ -151,7 +151,7 @@ body {
 }
 
 .dark-overlay {
-	position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

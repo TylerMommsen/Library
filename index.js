@@ -16,36 +16,23 @@ Book.prototype.updateHasRead = function () {
 }
 
 function isInLibrary(author) {
-  myLibrary.forEach(function (value) {
-    if (value.author === author) {
+  myLibrary.forEach(function (book) {
+    if (book.author === author) {
       return true;
     }
   })
 }
 
-function handleBookForm() {
-  formContainer.style.display = 'flex';
-  darkOverlay.style.display = 'block';
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    let author = authorInput.value;
-    let title = titleInput.value;
-    let pages = pagesInput.value;
-    let hasRead = hasReadInput.checked;
-    addBookToLibrary(author, title, pages, hasRead);
-    formContainer.style.display = 'none';
-  })
-}
-
 function addBookToLibrary(author, title, pages, hasRead) {
   if (!isInLibrary(author)) {
-    addNewBook(author, title, pages, hasRead);
+    let newBookObj = new Book(author, title, pages, hasRead)
+    myLibrary.push(newBookObj);
+
+    createBookElement(author, title, pages, hasRead, newBookObj); // create dom elements
   }
 }
 
-function addNewBook(author, title, pages, hasRead) {
-  let newBookObj = new Book(author, title, pages, hasRead)
+function createBookElement(author, title, pages, hasRead, newBookObj) {
   const newBook = document.createElement('div');
   const newAuthor = document.createElement('p');
   const newTitle = document.createElement('p');
@@ -55,16 +42,19 @@ function addNewBook(author, title, pages, hasRead) {
 
   newBook.classList.add('book');
   newAuthor.id = 'book-author';
-  newHasRead.classList.add('btn', 'has-read');
-  remove.classList.add('btn', 'remove-btn');
+  newHasRead.classList.add('btn', 'green-btn');
+  remove.classList.add('btn', 'red-btn');
 
   newHasRead.addEventListener('click', function () {
     newBookObj.updateHasRead();
-    console.log(newBookObj.hasRead);
     if (newBookObj.hasRead) {
-      newHasRead.textContent = 'yes';
+      newHasRead.textContent = 'Read';
+      newHasRead.style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
+      newHasRead.style.color = 'black';
     } else {
-      newHasRead.textContent = 'no';
+      newHasRead.textContent = 'Not Read';
+      newHasRead.style.backgroundColor = 'rgba(255, 0, 0, 0.8)';
+      newHasRead.style.color = 'white';
     }
   });
 
@@ -74,15 +64,19 @@ function addNewBook(author, title, pages, hasRead) {
 
   newAuthor.textContent = author;
   newTitle.textContent = title;
-  newPages.textContent = pages;
+  newPages.textContent = pages + ' pages';
 
   if (hasRead) {
-    newHasRead.textContent = 'yes';
+    newHasRead.textContent = 'Read';
+    newHasRead.style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
+    newHasRead.style.color = 'black';
   } else {
-    newHasRead.textContent = 'no';
+    newHasRead.textContent = 'Not Read';
+    newHasRead.style.backgroundColor = 'rgba(255, 0, 0, 0.8)';
+    newHasRead.style.color = 'white';
   }
 
-  remove.textContent = 'remove';
+  remove.textContent = 'Remove';
   
   newBook.appendChild(newAuthor);
   newBook.appendChild(newTitle);
@@ -90,13 +84,12 @@ function addNewBook(author, title, pages, hasRead) {
   newBook.appendChild(newHasRead);
   newBook.appendChild(remove);
 
-  myLibrary.push(newBookObj);
   booksContainer.appendChild(newBook);
 }
 
 const addBookBtn = document.querySelector('#add-book-btn');
-addBookBtn.addEventListener('click', handleBookForm);
 
+// reference to dom elements
 const formContainer = document.querySelector('.form-container');
 const darkOverlay = document.querySelector('.dark-overlay');
 const form = document.querySelector('#add-new-book-form');
@@ -106,13 +99,32 @@ const pagesInput = document.querySelector('#pages');
 const hasReadInput = document.querySelector('#is-read');
 const booksContainer = document.querySelector('.books-container');
 
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  let author = authorInput.value;
+  let title = titleInput.value;
+  let pages = pagesInput.value;
+  let hasRead = hasReadInput.checked;
+  formContainer.style.display = 'none';
+  darkOverlay.style.display = 'none';
+  authorInput.value = '';
+  titleInput.value = '';
+  pagesInput.value = '';
+  hasReadInput.checked = false;
+  addBookToLibrary(author, title, pages, hasRead);
+})
+
+addBookBtn.addEventListener('click', () => {
+  formContainer.style.display = 'flex';
+  darkOverlay.style.display = 'block';
+});
 
 function removeBtn(button) {
   let buttonParent = button.parentNode;
-  let bookTitle = buttonParent.firstElementChild.textContent;
+  let bookAuthor = buttonParent.firstElementChild.textContent;
 
-  myLibrary.forEach(function (value, i) {
-    if (value.author === bookTitle) {
+  myLibrary.forEach(function (book, i) {
+    if (book.author === bookAuthor) {
       myLibrary.splice(i, 1);
       buttonParent.remove();
     }
